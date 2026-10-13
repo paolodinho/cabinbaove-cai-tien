@@ -97,6 +97,18 @@ add_filter('rank_math/json_ld', function ($data) {
     return $data;
 }, 20);
 
+// Ảnh: trả bản .webp (tạo sẵn cạnh ảnh gốc, ten.jpg.webp) nếu có - nhẹ hơn ~3 lần, giữ nguyên URL ảnh gốc
+add_action('template_redirect', function () {
+    if (is_admin() || is_feed()) return;
+    ob_start(function ($html) {
+        $home = home_url('/');
+        return preg_replace_callback('#(?<=["\'\s,(])((?:' . preg_quote($home, '#') . '|/)(?:wp-content/)?uploads/[^"\'\s,)?]+\.(?:jpe?g|png))(?=[\s"\',)])#i', function ($m) use ($home) {
+            $rel = rawurldecode(preg_replace('#^' . preg_quote($home, '#') . '|^/#', '', $m[1]));
+            return is_file(ABSPATH . $rel . '.webp') ? $m[1] . '.webp' : $m[1];
+        }, $html);
+    });
+});
+
 // rel next/prev + canonical cua Rank Math: /slug.html/page/N -> /slug/trang-N.html
 function cbv_fix_paged_url($u) {
     return is_string($u) ? preg_replace(['#\.html/page/1/?$#', '#\.html/page/(\d+)/?$#'], ['.html', '/trang-$1.html'], $u) : $u;
