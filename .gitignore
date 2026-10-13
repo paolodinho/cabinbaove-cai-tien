@@ -1,0 +1,8 @@
+wp/local-admin.json
+*.zip
+tham-khao/media/
+tham-khao/media-vn/
+tham-khao/html/
+.DS_Store
+._*
+__pycache__/
