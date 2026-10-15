@@ -1,6 +1,6 @@
 <?php
 if (!defined('ABSPATH')) exit;
-define('CBV_VER', '1.0.0');
+define('CBV_VER', '1.0.1');
 require __DIR__ . '/inc/options.php';
 require __DIR__ . '/inc/admin-branding.php';
 
@@ -32,7 +32,9 @@ add_filter('the_content', function ($c) {
 }, 20);
 // Không dùng em dash/en dash
 function cbv_no_dash($s) { return is_string($s) ? str_replace(['—', '–', '&#8212;', '&#8211;', '&mdash;', '&ndash;'], '-', $s) : $s; }
-foreach (['the_content', 'the_title', 'the_excerpt', 'single_post_title', 'term_description', 'woocommerce_short_description', 'document_title'] as $h) add_filter($h, 'cbv_no_dash', 20);
+foreach (['the_content', 'the_title', 'the_excerpt', 'single_post_title', 'term_description', 'woocommerce_short_description', 'document_title', 'rank_math/frontend/title', 'rank_math/frontend/description', 'rank_math/opengraph/facebook/og_title', 'rank_math/opengraph/twitter/title'] as $h) add_filter($h, 'cbv_no_dash', 20);
+/* Lưới cuối: lọc gạch dài trong toàn bộ HTML trang (thông số SP, trích đoạn, alt ảnh...) */
+add_action('template_redirect', function () { if (!is_admin() && !wp_doing_ajax() && !is_feed()) ob_start('cbv_no_dash'); }, 0);
 
 // Số sản phẩm/bài mỗi trang giống site cũ
 add_action('pre_get_posts', function ($q) {
