@@ -101,7 +101,7 @@ p,li,figcaption{text-wrap:pretty}
 /* Thẻ sản phẩm */
 .pcard{display:flex;flex-direction:column;background:var(--card);border-radius:var(--r);padding:10px;transition:box-shadow .3s var(--ease),transform .3s var(--ease)}
 .pcard:hover{box-shadow:var(--sh-2);transform:translateY(-3px)}
-.pcard__img{display:block;background:#fff;aspect-ratio:4/3;overflow:hidden;border-radius:2px}
+.pcard__img{display:block;background:#fff;aspect-ratio:16/10;overflow:hidden;border-radius:2px}
 .pcard__img img{width:100%;height:100%;object-fit:contain;transition:transform .4s var(--ease)}
 .pcard:hover .pcard__img img{transform:scale(1.04)}
 .pcard__body{display:flex;flex-direction:column;flex:1;padding:10px 4px 2px}
@@ -132,7 +132,7 @@ p,li,figcaption{text-wrap:pretty}
 .acard__ex{font-size:14px;color:#555;margin:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .alist{display:grid;gap:16px}
 .alist .acard{flex-direction:row}
-.alist .acard__img{flex:0 0 260px;aspect-ratio:auto;min-height:170px}
+.alist .acard__img{flex:0 0 260px;aspect-ratio:16/10;min-height:0;align-self:flex-start}
 
 /* Bố cục có sidebar trái (như site cũ) */
 .layout{display:grid;grid-template-columns:270px minmax(0,1fr);gap:30px;padding-top:24px;padding-bottom:40px}
