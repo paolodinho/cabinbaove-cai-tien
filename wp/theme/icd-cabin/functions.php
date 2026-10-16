@@ -1,6 +1,6 @@
 <?php
 if (!defined('ABSPATH')) exit;
-define('CBV_VER', '1.1.2');
+define('CBV_VER', '1.1.4');
 require __DIR__ . '/inc/options.php';
 require __DIR__ . '/inc/admin-branding.php';
 require __DIR__ . '/inc/group-banner.php';
@@ -54,17 +54,11 @@ function cbv_product_cats() {
 function cbv_breadcrumb() {
     if (is_front_page()) return;
     $items = [['Trang chủ', home_url('/')]];
-    if (is_singular('product')) {
-        $items[] = ['Sản phẩm', get_permalink(wc_get_page_id('shop'))];
-        $t = get_the_terms(get_the_ID(), 'product_cat');
-        if ($t) { usort($t, fn($a, $b) => $b->parent <=> $a->parent); $c = $t[0];
-            foreach (array_reverse(get_ancestors($c->term_id, 'product_cat')) as $a) { $a = get_term($a); $items[] = [$a->name, get_term_link($a)]; }
-            $items[] = [$c->name, get_term_link($c)]; }
-    } elseif (is_tax('product_cat')) {
-        $items[] = ['Sản phẩm', get_permalink(wc_get_page_id('shop'))];
-        $c = get_queried_object();
-        foreach (array_reverse(get_ancestors($c->term_id, 'product_cat')) as $a) { $a = get_term($a); $items[] = [$a->name, get_term_link($a)]; }
-        $items[] = [$c->name, ''];
+    if (is_singular('product') || is_tax('product_cat')) {
+        // Gọn: Trang chủ / nhóm sản phẩm (trang danh mục con: thêm tên danh mục con)
+        $g = cbv_current_group();
+        if ($g) $items[] = [$g->name, is_tax('product_cat') && get_queried_object_id() === $g->term_id ? '' : get_term_link($g)];
+        if (is_tax('product_cat') && (!$g || get_queried_object_id() !== $g->term_id)) $items[] = [get_queried_object()->name, ''];
     } elseif (is_singular('post')) {
         $c = get_the_category(); if ($c) $items[] = [$c[0]->name, get_category_link($c[0])];
     } elseif (is_category()) { $items[] = [single_cat_title('', false), ''];
@@ -74,7 +68,7 @@ function cbv_breadcrumb() {
     echo '<nav class="crumbs" aria-label="Breadcrumb"><div class="wrap"><ol>';
     foreach ($items as $i => $it) {
         $last = $i === count($items) - 1;
-        echo '<li>' . (!$last && $it[1] ? '<a href="' . esc_url($it[1]) . '">' . esc_html($it[0]) . '</a>' : '<span>' . esc_html($it[0]) . '</span>') . '</li>';
+        echo '<li>' . ($it[1] ? '<a href="' . esc_url($it[1]) . '">' . esc_html($it[0]) . '</a>' : '<span>' . esc_html($it[0]) . '</span>') . '</li>';
     }
     echo '</ol></div></nav>';
 }
