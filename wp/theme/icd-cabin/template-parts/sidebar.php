@@ -24,7 +24,7 @@
     <h2 class="side__h">Hoạt động mới</h2>
     <ul class="side__news">
       <?php while ($news->have_posts()): $news->the_post(); ?>
-      <li><a href="<?php the_permalink(); ?>"><?php if (has_post_thumbnail()) the_post_thumbnail('thumbnail', ['loading' => 'lazy', 'alt' => '']); ?><span><?php the_title(); ?></span></a></li>
+      <li><a href="<?php the_permalink(); ?>"><?php if (has_post_thumbnail()) the_post_thumbnail('medium', ['loading' => 'lazy', 'alt' => '']); ?><span><?php the_title(); ?></span></a></li>
       <?php endwhile; wp_reset_postdata(); ?>
     </ul>
   </section>
