@@ -334,3 +334,11 @@ p,li,figcaption{text-wrap:pretty}
 .catm__x:hover{color:var(--ink)}
 .catm__go{width:100%}.catm__go:disabled{opacity:.6;cursor:wait}
 .catm__note{margin:0;font-size:12.5px;color:var(--muted)}
+
+/* === 16/10: breadcrumb 1 dòng trên mobile (khách góp ý) === */
+@media(max-width:760px){
+  .crumbs ol{flex-wrap:nowrap;white-space:nowrap;overflow:hidden}
+  .crumbs li{flex:none;text-wrap:nowrap;white-space:nowrap}
+  .crumbs li:last-child{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis}
+  .crumbs li:last-child a,.crumbs li:last-child span{overflow:hidden;text-overflow:ellipsis}
+}
