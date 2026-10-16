@@ -11,6 +11,7 @@ $paged = max(1, (int) get_query_var('paged')); ?>
       <?php if ($is_cat && $paged === 1 && trim($term->description)): ?><div class="page-head__desc entry"><?= wp_kses_post(wpautop($term->description)) ?></div><?php endif; ?>
       <?php if ($is_cat): $kids = get_terms(['taxonomy' => 'product_cat', 'parent' => $term->term_id, 'hide_empty' => true]);
         if ($kids): ?><ul class="chips"><?php foreach ($kids as $k) echo '<li><a href="' . esc_url(get_term_link($k)) . '">' . esc_html($k->name) . ' (' . (int) $k->count . ')</a></li>'; ?></ul><?php endif; endif; ?>
+      <?php if ($is_cat && $paged === 1) echo cbv_cat_btn('page-head__cat'); ?>
     </header>
     <?php if (have_posts()): ?>
       <div class="grid grid--3">
@@ -20,7 +21,6 @@ $paged = max(1, (int) get_query_var('paged')); ?>
     <?php else: ?>
       <p class="empty">Chưa có sản phẩm phù hợp. Vui lòng gọi <a href="<?= esc_attr(cbv_tel(cbv_opt('hotline'))) ?>"><?= esc_html(cbv_opt('hotline')) ?></a> để được tư vấn.</p>
     <?php endif; ?>
-    <?php get_template_part('template-parts/catalog'); ?>
   </div>
 </div>
 <?php get_footer();

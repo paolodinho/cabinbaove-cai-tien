@@ -14,14 +14,6 @@ git = OUT + '/.git'
 if os.path.exists(git): shutil.move(git, W + '/_git')
 shutil.rmtree(OUT, ignore_errors=True); shutil.copytree(NEW, OUT)
 if os.path.exists(W + '/_git'): shutil.move(W + '/_git', git)
-# Catalogue PDF (thuộc tính data-demo, wget không tự tải): chép từ Local để bản demo thử được luồng tải file
-PUB = os.path.expanduser('~/Local Sites/cabinbaove/app/public/')
-for r, ds, fs in os.walk(OUT):
-    for f in fs:
-        if f.endswith('.html'):
-            for m in re.findall(r'data-demo="http://cabinbaove\.local/([^"]+\.pdf)"', open(os.path.join(r, f), encoding='utf-8', errors='ignore').read()):
-                src = PUB + m; dst = os.path.join(OUT, m)
-                if os.path.exists(src) and not os.path.exists(dst): os.makedirs(os.path.dirname(dst), exist_ok=True); shutil.copy2(src, dst)
 os.chdir(OUT)
 ver = re.compile(r'(?:%3F|\?)(?:ver|v)=[^"\'\s>)]*')
 stamp = str(int(time.time()))

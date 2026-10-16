@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: CBV Catalogue (cabinbaove.com.vn)
- * Description: Tải catalogue PDF theo nhóm sản phẩm. Khách điền đủ họ tên, số điện thoại, email mới tải được file; thông tin lưu ở menu "Khách tải catalogue" và gửi email.
+ * Description: Tải catalogue PDF theo nhóm sản phẩm. Khách điền đủ họ tên, số điện thoại, email; catalogue được gửi về email của khách; thông tin lưu ở menu "Khách tải catalogue" và gửi email.
  * Quản trị: menu "Catalogue" > Thêm mới: nhập tên, chọn file PDF, tick nhóm sản phẩm, (tuỳ chọn) ảnh bìa = Ảnh đại diện.
  */
 if (!defined('ABSPATH')) exit;
@@ -82,11 +82,11 @@ function cbv_cat_norm_phone($p) {
 add_action('wp_ajax_cbv_catalog', 'cbv_catalog_submit');
 add_action('wp_ajax_nopriv_cbv_catalog', 'cbv_catalog_submit');
 function cbv_catalog_submit() {
-    $id = (int) ($_POST['id'] ?? 0); $p = get_post($id);
-    if (!$p || $p->post_type !== 'cbv_catalog' || $p->post_status !== 'publish') wp_send_json_error(['msg' => 'Catalogue không còn tồn tại.']);
-    $fake_ok = function () { wp_send_json_success(['url' => '', 'msg' => 'Đã nhận thông tin.']); };
-    // Chặn máy: ô bẫy, gửi quá nhanh (dưới 3 giây), thiếu tick xác nhận
-    if (!empty($_POST['website']) || (time() - (int) ($_POST['t0'] ?? 0)) < 3 || empty($_POST['t0'])) $fake_ok();
+    $ids = array_filter(array_map('intval', (array) ($_POST['ids'] ?? [])));
+    $cats = array_values(array_filter(array_map('get_post', $ids), function ($p) { return $p && $p->post_type === 'cbv_catalog' && $p->post_status === 'publish' && get_post_meta($p->ID, '_cbv_file', true); }));
+    if (!$cats) wp_send_json_error(['msg' => 'Vui lòng chọn ít nhất 1 catalogue.']);
+    // Chặn máy: ô bẫy, gửi quá nhanh (dưới 3 giây) -> trả "thành công" giả, không gửi gì
+    if (!empty($_POST['website']) || empty($_POST['t0']) || (time() - (int) $_POST['t0']) < 3) wp_send_json_success(['msg' => 'Catalogue đã được gửi tới email của bạn.']);
     if (empty($_POST['human'])) wp_send_json_error(['msg' => 'Vui lòng tick "Tôi không phải người máy".']);
     $name = trim(sanitize_text_field($_POST['name'] ?? '')); $email = sanitize_email($_POST['email'] ?? '');
     $org = sanitize_text_field($_POST['org'] ?? ''); $phone = cbv_cat_norm_phone($_POST['phone'] ?? '');
@@ -96,21 +96,47 @@ function cbv_catalog_submit() {
     $ip = $_SERVER['REMOTE_ADDR'] ?? ''; $k = 'cbv_cat_rl_' . md5($ip); $n = (int) get_transient($k);
     if ($n >= 3) wp_send_json_error(['msg' => 'Bạn gửi quá nhanh, vui lòng thử lại sau 1 phút.']);
     set_transient($k, $n + 1, 60);
+
+    // File đính kèm: mỗi file <= 10MB và tổng <= 15MB; file lớn hơn gửi bằng link tải (hiệu lực 7 ngày)
+    $att = []; $links = []; $total = 0; $exp = time() + 7 * DAY_IN_SECONDS;
+    foreach ($cats as $c) {
+        $f = get_attached_file((int) get_post_meta($c->ID, '_cbv_file', true)); $sz = $f && file_exists($f) ? filesize($f) : 0;
+        if ($sz && $sz <= 10 * MB_IN_BYTES && $total + $sz <= 15 * MB_IN_BYTES) {
+            $tmp = trailingslashit(get_temp_dir()) . sanitize_file_name($c->post_title) . '.pdf'; copy($f, $tmp); $att[] = $tmp; $total += $sz;
+        }
+        $links[] = ['t' => $c->post_title, 'u' => add_query_arg(['cbv_dl' => $c->ID, 'e' => $exp, 'k' => cbv_cat_token($c->ID, $exp)], home_url('/')), 'a' => in_array($tmp ?? '', $att, true)];
+        update_post_meta($c->ID, '_cbv_count', (int) get_post_meta($c->ID, '_cbv_count', true) + 1);
+        unset($tmp);
+    }
+    $hot = function_exists('cbv_opt') ? cbv_opt('hotline') : ''; $zalo = function_exists('cbv_opt') ? cbv_opt('phone') : '';
+    $li = '';
+    foreach ($links as $l) $li .= '<li style="margin:6px 0"><b>' . esc_html($l['t']) . '</b>' . ($l['a'] ? ' (đính kèm trong email)' : '') . ' - <a href="' . esc_url($l['u']) . '" style="color:#E57600">Tải file PDF</a></li>';
+    $html = '<div style="font:15px/1.6 Arial,sans-serif;color:#222;max-width:600px">'
+        . '<p>Chào ' . esc_html($name) . ',</p>'
+        . '<p>Cảm ơn bạn đã quan tâm đến sản phẩm của ICD Cabin Technology. Catalogue bạn yêu cầu:</p><ul>' . $li . '</ul>'
+        . '<p style="font-size:13px;color:#666">Link tải có hiệu lực 7 ngày.</p>'
+        . '<p>Cần tư vấn chọn mẫu, kích thước hoặc báo giá, vui lòng gọi <b>' . esc_html($hot) . '</b>' . ($zalo ? ' hoặc Zalo <b>' . esc_html($zalo) . '</b>' : '') . '.</p>'
+        . '<p>Trân trọng,<br><b>ICD Cabin Technology</b><br><a href="' . esc_url(home_url('/')) . '">' . esc_html(wp_parse_url(home_url(), PHP_URL_HOST)) . '</a></p></div>';
+    $titles = implode(', ', wp_list_pluck($cats, 'post_title'));
+    $hdr = ['Content-Type: text/html; charset=UTF-8'];
+    $staff = (function_exists('cbv_opt') ? cbv_opt('email') : '') ?: get_option('admin_email');
+    if ($staff) $hdr[] = 'Reply-To: ICD Cabin <' . $staff . '>';
+    $sent = wp_mail($email, 'Catalogue ICD Cabin: ' . $titles, $html, $hdr, $att);
+    foreach ($att as $t) @unlink($t);
+
     $page = esc_url_raw(wp_get_referer() ?: '');
-    $body = "Họ tên: $name\nĐiện thoại: $phone\nEmail: $email\nCông ty/Đơn vị: $org\nCatalogue: {$p->post_title}\nTrang tải: $page\nThời gian: " . wp_date('d/m/Y H:i');
-    wp_insert_post(['post_type' => 'tai_catalog', 'post_status' => 'publish', 'post_title' => "$name - $phone - {$p->post_title}", 'post_content' => $body]);
-    update_post_meta($id, '_cbv_count', (int) get_post_meta($id, '_cbv_count', true) + 1);
-    $o = get_option('cbv_opts', []);
-    wp_mail(!empty($o['email']) ? $o['email'] : get_option('admin_email'), "[Tải catalogue] $name - $phone - {$p->post_title}", $body);
-    $exp = time() + 2 * DAY_IN_SECONDS;
-    wp_send_json_success(['url' => add_query_arg(['cbv_dl' => $id, 'e' => $exp, 'k' => cbv_cat_token($id, $exp)], home_url('/')), 'msg' => 'Cảm ơn bạn. File đang được tải về.']);
+    $body = "Họ tên: $name\nĐiện thoại: $phone\nEmail: $email\nCông ty/Đơn vị: $org\nCatalogue: $titles\nĐã gửi email: " . ($sent ? 'có' : 'LỖI GỬI') . "\nTrang: $page\nThời gian: " . wp_date('d/m/Y H:i');
+    wp_insert_post(['post_type' => 'tai_catalog', 'post_status' => 'publish', 'post_title' => "$name - $phone - $titles", 'post_content' => $body]);
+    wp_mail($staff, "[Tải catalogue] $name - $phone - $titles", $body);
+    if (!$sent) wp_send_json_error(['msg' => 'Chưa gửi được email. Vui lòng gọi ' . $hot . ' để nhận catalogue.']);
+    wp_send_json_success(['msg' => 'Catalogue đã được gửi tới ' . $email . '. Vui lòng kiểm tra hộp thư (cả mục Spam/Quảng cáo).']);
 }
 
 /* ---------- Link tải: chỉ chạy khi token đúng và còn hạn ---------- */
 add_action('template_redirect', function () {
     if (!isset($_GET['cbv_dl'])) return;
     $id = (int) $_GET['cbv_dl']; $exp = (int) ($_GET['e'] ?? 0);
-    if ($exp < time() || !hash_equals(cbv_cat_token($id, $exp), (string) ($_GET['k'] ?? ''))) { wp_die('Link tải đã hết hạn. Vui lòng quay lại trang sản phẩm để tải lại catalogue.', 'Link hết hạn', ['response' => 403, 'back_link' => true]); }
+    if ($exp < time() || !hash_equals(cbv_cat_token($id, $exp), (string) ($_GET['k'] ?? ''))) { wp_die('Link tải đã hết hạn. Vui lòng vào website và bấm Tải catalogue để nhận link mới.', 'Link hết hạn', ['response' => 403, 'back_link' => true]); }
     $f = get_attached_file((int) get_post_meta($id, '_cbv_file', true));
     if (!$f || !file_exists($f)) wp_die('Không tìm thấy file.', '', ['response' => 404]);
     while (ob_get_level()) ob_end_clean();
@@ -119,3 +145,6 @@ add_action('template_redirect', function () {
     header('X-Robots-Tag: noindex'); nocache_headers();
     readfile($f); exit;
 }, 1);
+
+/* Tên người gửi email của web: ICD Cabin Technology (thay "WordPress") */
+add_filter('wp_mail_from_name', function ($n) { return $n === 'WordPress' ? 'ICD Cabin Technology' : $n; });

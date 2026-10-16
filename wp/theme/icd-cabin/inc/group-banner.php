@@ -54,7 +54,7 @@ function cbv_group_banner($term) {
   </div>
   <?php if ($photo): ?><div class="gban__ph"><img src="<?= esc_url($photo) ?>" alt="<?= esc_attr($term->name) ?> ICD" loading="lazy" width="270" height="270"></div><?php endif; ?>
   <a class="gban__cta" href="#bao-gia">Nhận báo giá</a>
-  <?php if (function_exists('cbv_catalogs_for') && cbv_catalogs_for($term->term_id)): ?><a class="gban__cat" href="#catalogue">Tải catalogue PDF</a><?php endif; ?>
+  <?= cbv_cat_btn('gban__cat') ?>
 </div>
 <?php return ob_get_clean();
 }
@@ -84,3 +84,12 @@ add_action('admin_enqueue_scripts', function ($hook) {
     wp_enqueue_media();
     wp_add_inline_script('jquery-core', "jQuery(function($){\$(document).on('click','.cbv-pick',function(){var t=\$('#'+\$(this).data('for'));var f=wp.media({title:'Chọn ảnh',multiple:false,library:{type:'image'}});f.on('select',function(){t.val(f.state().get('selection').first().toJSON().url)});f.open();});});");
 });
+
+/** Nút "Tải catalogue" (chỉ hiện khi nhóm đang xem có catalogue). Bấm mở hộp nhập thông tin, file gửi về email. */
+function cbv_cat_btn($cls = '') {
+    $g = cbv_current_group();
+    if (!$g || !function_exists('cbv_catalogs_for') || !cbv_catalogs_for($g->term_id)) return '';
+    $icon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 19h16"/></svg>';
+    return '<button type="button" class="btn btn--dl cat-open ' . esc_attr($cls) . '">' . $icon . 'Tải catalogue</button>';
+}
+add_action('wp_footer', function () { get_template_part('template-parts/catalog'); }, 5);
