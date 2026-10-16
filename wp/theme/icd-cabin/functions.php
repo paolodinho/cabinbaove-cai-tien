@@ -1,6 +1,6 @@
 <?php
 if (!defined('ABSPATH')) exit;
-define('CBV_VER', '1.0.1');
+define('CBV_VER', '1.1.1');
 require __DIR__ . '/inc/options.php';
 require __DIR__ . '/inc/admin-branding.php';
 require __DIR__ . '/inc/group-banner.php';

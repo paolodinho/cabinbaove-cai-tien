@@ -33,6 +33,7 @@ $imgs = array_filter(array_merge([get_post_thumbnail_id($id)], array_map('intval
       <h2 class="tab-h">Thông tin chi tiết</h2>
       <div class="entry"><?php the_content(); ?></div>
     </section>
+    <?php get_template_part('template-parts/catalog'); ?>
     <?php $cats = wp_get_post_terms($id, 'product_cat', ['fields' => 'ids']);
     $rel = new WP_Query(['post_type' => 'product', 'posts_per_page' => 6, 'post__not_in' => [$id], 'no_found_rows' => true, 'orderby' => 'menu_order', 'order' => 'ASC',
         'tax_query' => [['taxonomy' => 'product_cat', 'terms' => $cats]]]);

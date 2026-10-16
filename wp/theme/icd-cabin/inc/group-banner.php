@@ -54,6 +54,7 @@ function cbv_group_banner($term) {
   </div>
   <?php if ($photo): ?><div class="gban__ph"><img src="<?= esc_url($photo) ?>" alt="<?= esc_attr($term->name) ?> ICD" loading="lazy" width="270" height="270"></div><?php endif; ?>
   <a class="gban__cta" href="#bao-gia">Nhận báo giá</a>
+  <?php if (function_exists('cbv_catalogs_for') && cbv_catalogs_for($term->term_id)): ?><a class="gban__cat" href="#catalogue">Tải catalogue PDF</a><?php endif; ?>
 </div>
 <?php return ob_get_clean();
 }

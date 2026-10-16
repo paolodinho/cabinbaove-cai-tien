@@ -20,6 +20,7 @@ $paged = max(1, (int) get_query_var('paged')); ?>
     <?php else: ?>
       <p class="empty">Chưa có sản phẩm phù hợp. Vui lòng gọi <a href="<?= esc_attr(cbv_tel(cbv_opt('hotline'))) ?>"><?= esc_html(cbv_opt('hotline')) ?></a> để được tư vấn.</p>
     <?php endif; ?>
+    <?php get_template_part('template-parts/catalog'); ?>
   </div>
 </div>
 <?php get_footer();
