@@ -3,6 +3,7 @@ if (!defined('ABSPATH')) exit;
 define('CBV_VER', '1.0.1');
 require __DIR__ . '/inc/options.php';
 require __DIR__ . '/inc/admin-branding.php';
+require __DIR__ . '/inc/group-banner.php';
 
 add_action('after_setup_theme', function () {
     add_theme_support('title-tag');

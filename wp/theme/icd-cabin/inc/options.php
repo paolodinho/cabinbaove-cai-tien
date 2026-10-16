@@ -47,7 +47,7 @@ function cbv_settings_page() {
         'Liên hệ' => ['hotline' => 'Hotline (tổng đài)', 'phone' => 'Số điện thoại di động', 'zalo' => 'Số Zalo (viết liền)', 'email' => 'Email nhận báo giá', 'brand_line' => 'Dòng giới thiệu ở chân trang',
                       'addr_hn' => 'Trụ sở Hà Nội', 'factory' => 'Nhà máy sản xuất', 'addr_hcm' => 'Chi nhánh Hồ Chí Minh', 'facebook' => 'Link Facebook', 'youtube' => 'Link YouTube', 'map' => 'Link nhúng Google Maps (trang Liên hệ)'],
         'Trang chủ' => ['slides' => 'Ảnh slider: mỗi dòng "đường dẫn ảnh | link | mô tả ảnh"', 'home_rows' => 'Các hàng sản phẩm: mỗi dòng "đường dẫn danh mục | số sản phẩm"',
-                        'commit' => 'Dải cam kết dưới slider: mỗi dòng 1 ý', 'sidebar_ad' => 'Banner cột trái: "đường dẫn ảnh | link"'],
+                        'commit' => 'Dải cam kết dưới slider: mỗi dòng 1 ý', 'sidebar_ad' => 'Banner cột trái ở trang tin tức, giới thiệu (trang sản phẩm dùng banner riêng của từng nhóm, sửa trong Sản phẩm > Danh mục): "đường dẫn ảnh | link"'],
     ];
     $o = wp_parse_args(get_option('cbv_opts', []), cbv_defaults());
     echo '<div class="wrap"><h1>Cài đặt ICD Cabin</h1><p>Sửa thông tin hiển thị trên toàn website. Bấm "Lưu thay đổi" ở cuối trang.</p><form method="post" action="options.php">';

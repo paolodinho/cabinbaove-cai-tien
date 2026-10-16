@@ -292,3 +292,22 @@ p,li,figcaption{text-wrap:pretty}
   .prd__cta .btn{flex:1 1 100%}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+
+/* === 16/10: banner quảng cáo riêng từng nhóm sản phẩm (khách yêu cầu) === */
+.gban{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:#fff;text-align:center;margin-bottom:20px}
+.gban__top{padding:16px 14px 12px;background:linear-gradient(180deg,#F1F8F4 0%,#fff 100%)}
+.gban__logo{width:64px;height:auto;margin:0 auto 4px}
+.gban p{margin:0}
+.gban__brand{font:700 15px/1.2 var(--f-head);color:var(--green-deep);letter-spacing:.02em}
+.gban__k{margin-top:8px!important;font:700 12px/1.3 var(--f-head);color:var(--orange-dk);text-transform:uppercase;letter-spacing:.06em}
+.gban__name{margin-top:4px!important;font:700 19px/1.2 var(--f-head);color:#fff;background:var(--green-dk);padding:7px 8px;border-radius:3px;text-transform:uppercase;text-wrap:balance}
+.gban__sub{margin-top:8px!important;font:600 13.5px/1.35 var(--f-body);color:var(--ink);text-wrap:balance}
+.gban__note{margin-top:6px!important;display:inline-block;font:500 12.5px/1.3 var(--f-body);color:var(--ink);background:var(--orange-soft);padding:4px 8px;border-radius:3px}
+.gban__k--call{margin-top:12px!important;color:var(--ink)}
+.gban__tel{display:block;font:700 24px/1.15 var(--f-head);color:#D7261E;white-space:nowrap}
+.gban__tel:hover{color:var(--orange-dk)}
+.gban__ph{background:#fff;padding:0 10px}
+.gban__ph img{width:100%;aspect-ratio:1/1;object-fit:contain}
+.gban__cta{display:block;margin:0 14px 14px;padding:10px;background:var(--orange-btn);color:#fff;font:700 15px/1.2 var(--f-head);text-transform:uppercase;border-radius:var(--r);transition:background .15s}
+.gban__cta:hover{background:var(--orange-dk);color:#fff}
+@media(max-width:1024px){.gban{max-width:420px;margin-left:auto;margin-right:auto}}

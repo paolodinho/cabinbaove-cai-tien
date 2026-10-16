@@ -29,7 +29,9 @@
     </ul>
   </section>
   <?php endif;
-  $ad = cbv_lines('sidebar_ad'); if ($ad && !empty($ad[0][0])): ?>
+  $grp = cbv_current_group();
+  if ($grp): echo cbv_group_banner($grp);
+  else: $ad = cbv_lines('sidebar_ad'); if ($ad && !empty($ad[0][0])): ?>
   <a class="side__ad" href="<?= esc_url($ad[0][1] ?? '#') ?>" target="_blank" rel="noopener"><img src="<?= esc_url(home_url($ad[0][0])) ?>" alt="Thùng rác môi trường ICD" loading="lazy" width="270" height="400"></a>
-  <?php endif; ?>
+  <?php endif; endif; ?>
 </aside>
