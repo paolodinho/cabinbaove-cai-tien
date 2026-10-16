@@ -85,39 +85,36 @@
   if (document.readyState !== 'loading') glue(); else document.addEventListener('DOMContentLoaded', function () { glue(); });
   window.icdGlueOrphans = glue;
 
-  // Tải catalogue: điền họ tên, SĐT, email rồi mới tải file
+  // Tải catalogue: khách điền thông tin, catalogue gửi về email
   var d = document, dlg = d.getElementById('catm');
   if (dlg && dlg.showModal) {
-    var f = dlg.querySelector('form'), msg = f.querySelector('[data-msg]'), go = f.querySelector('.catm__go'), demo = '';
+    var f = dlg.querySelector('form'), msg = f.querySelector('[data-msg]'), go = f.querySelector('.catm__go');
     var KEY = 'cbvCatLead';
     function say(t, ok) { msg.hidden = !t; msg.textContent = t || ''; msg.className = 'msg ' + (ok ? 'msg--ok' : 'msg--err'); }
     d.addEventListener('click', function (e) {
-      var b = e.target.closest('.cat__btn'); if (!b) return;
-      f.id.value = b.getAttribute('data-cat'); f.t0.value = Math.floor(Date.now() / 1000);
-      dlg.querySelector('[data-ttl]').textContent = b.getAttribute('data-title');
-      demo = b.getAttribute('data-demo') || '';
+      if (!e.target.closest('.cat-open')) return;
+      f.t0.value = Math.floor(Date.now() / 1000);
       try { var s = JSON.parse(localStorage.getItem(KEY) || 'null'); if (s) ['name', 'phone', 'email', 'org'].forEach(function (k) { if (!f[k].value) f[k].value = s[k] || ''; }); } catch (x) {}
-      say(''); go.disabled = false; dlg.showModal(); (f.name.value ? go : f.name).focus();
+      say(''); go.disabled = false; go.hidden = false; dlg.showModal(); (f.name.value ? go : f.name).focus();
     });
     dlg.addEventListener('click', function (e) { if (e.target === dlg || e.target.closest('[data-close]')) dlg.close(); });
-    function getFile(url) { var a = d.createElement('a'); a.href = url; a.setAttribute('download', ''); d.body.appendChild(a); a.click(); a.remove(); }
     f.addEventListener('submit', function (e) {
       e.preventDefault();
+      if (!f.querySelector('input[name="ids[]"]:checked')) { say('Vui lòng chọn ít nhất 1 catalogue.'); return; }
       if (!f.name.value.trim() || !f.phone.value.trim() || !f.email.value.trim()) { say('Vui lòng nhập đủ họ tên, số điện thoại và email.'); return; }
       if (!f.human.checked) { say('Vui lòng tick "Tôi không phải người máy".'); return; }
-      go.disabled = true; say('Đang gửi...', true);
+      go.disabled = true; say('Đang gửi catalogue...', true);
       fetch(f.getAttribute('data-ajax'), { method: 'POST', body: new FormData(f), credentials: 'same-origin' })
         .then(function (r) { return r.json(); })
         .then(function (r) {
           go.disabled = false;
           if (!r.success) { say(r.data && r.data.msg || 'Có lỗi, vui lòng thử lại.'); if (r.data && r.data.f && f[r.data.f]) f[r.data.f].focus(); return; }
           try { localStorage.setItem(KEY, JSON.stringify({ name: f.name.value, phone: f.phone.value, email: f.email.value, org: f.org.value })); } catch (x) {}
-          say(r.data.msg, true); if (r.data.url) getFile(r.data.url);
-          setTimeout(function () { dlg.close(); }, 2500);
+          say(r.data.msg, true); go.hidden = true;
         })
         .catch(function () {
           go.disabled = false;
-          if (demo) { say('Bản demo: không lưu thông tin, file tải trực tiếp để xem thử.', true); getFile(demo); return; }
+          if (/github\.io$/.test(location.hostname)) { say('Bản xem giao diện: trên website chính thức, catalogue sẽ được gửi về email bạn vừa nhập.', true); return; }
           say('Không gửi được, vui lòng thử lại hoặc gọi hotline.');
         });
     });

@@ -56,7 +56,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 /*# sourceURL=woocommerce-inline-inline-css */
 </style>
 <link rel='stylesheet' id='cbv-fonts-css' href='https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@600;700&#038;family=Roboto:wght@400;500;700&#038;display=swap' media='all' />
-<link rel='stylesheet' id='cbv-main-css' href='wp-content/themes/icd-cabin/assets/css/main.css?v=1792118060' media='all' />
+<link rel='stylesheet' id='cbv-main-css' href='wp-content/themes/icd-cabin/assets/css/main.css?v=1792119018' media='all' />
 <script id="jquery-core-js" src="wp-includes/js/jquery/jquery.min.js"></script>
 <script id="jquery-migrate-js" src="wp-includes/js/jquery/jquery-migrate.min.js"></script>
 <script data-wp-strategy="defer" defer id="wc-jquery-blockui-js" src="wp-content/plugins/woocommerce/assets/js/jquery-blockui/jquery.blockUI.min.js"></script>
@@ -145,7 +145,7 @@ var woocommerce_params = {"ajax_url":"/wp-admin/admin-ajax.php","wc_ajax_url":"/
     <a class="gban__tel" href="tel:02422009188">024 2200 9188</a>
   </div>
   <div class="gban__ph"><img src="wp-content/uploads/2025/12/nha-lap-ghep-f20-768x768.jpg.webp" alt="Nhà di động - nhà phi thuyền - nhà lắp ghép ICD" loading="lazy" width="270" height="270"></div>  <a class="gban__cta" href="Nha-lap-ghep-F20-Mini.html#bao-gia">Nhận báo giá</a>
-  <a class="gban__cat" href="Nha-lap-ghep-F20-Mini.html#catalogue">Tải catalogue PDF</a></div>
+  <button type="button" class="btn btn--dl cat-open gban__cat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 19h16"/></svg>Tải catalogue</button></div>
 </aside>
   <div class="layout__main">
     <section class="prd">
@@ -161,7 +161,7 @@ var woocommerce_params = {"ajax_url":"/wp-admin/admin-ajax.php","wc_ajax_url":"/
           <a class="btn btn--cta" href="Nha-lap-ghep-F20-Mini.html#bao-gia">Nhận báo giá</a>
           <a class="btn btn--call" href="tel:02422009188">Gọi 024 2200 9188</a>
           <a class="btn btn--line" href="https://zalo.me/0935482688" target="_blank" rel="noopener">Tư vấn qua Zalo</a>
-        </div>
+          <button type="button" class="btn btn--dl cat-open "><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 19h16"/></svg>Tải catalogue</button>        </div>
       </div>
     </section>
     <section class="prd__content">
@@ -170,37 +170,6 @@ var woocommerce_params = {"ajax_url":"/wp-admin/admin-ajax.php","wc_ajax_url":"/
 <p style="text-align: center"><img loading="lazy" decoding="async" decoding="async" alt="" src="uploads/images/nha-lap-ghep-f20-mini-1.jpg.webp"/></p>
 </div>
     </section>
-    <section class="cat" id="catalogue">
-  <header class="sec-head"><h2 class="sec-head__h">Tải catalogue nhà di động - nhà phi thuyền - nhà lắp ghép</h2></header>
-  <p class="cat__lead">Catalogue PDF gồm hình ảnh, thông số và các mẫu tiêu biểu. Để lại thông tin để tải file, kỹ sư ICD Cabin có thể liên hệ hỗ trợ chọn mẫu khi bạn cần.</p>
-  <div class="cat__grid">
-        <article class="cat__card">
-      <div class="cat__cover"><img width="600" height="849" src="wp-content/uploads/2026/10/catalogue-thu-bia.jpg" class="attachment-medium_large size-medium_large wp-post-image" alt="Catalogue nhà lắp ghép (bản thử)" loading="lazy" decoding="async" srcset="wp-content/uploads/2026/10/catalogue-thu-bia.jpg 600w, wp-content/uploads/2026/10/catalogue-thu-bia-212x300.jpg 212w, wp-content/uploads/2026/10/catalogue-thu-bia-269x380.jpg 269w" sizes="auto, (max-width: 600px) 100vw, 600px" /></div>
-      <div class="cat__body">
-        <h3 class="cat__t">Catalogue nhà lắp ghép (bản thử)</h3>
-        <p class="cat__meta">PDF · 467,9 KB</p>
-        <button type="button" class="btn btn--cta cat__btn" data-cat="790" data-title="Catalogue nhà lắp ghép (bản thử)" data-demo="wp-content/uploads/2026/10/catalogue-thu-nha-lap-ghep.pdf">Tải catalogue</button>
-      </div>
-    </article>
-      </div>
-</section>
-<dialog class="catm" id="catm" aria-labelledby="catm-h">
-  <form class="catm__f" data-ajax="wp-admin/admin-ajax.php" novalidate>
-    <button type="button" class="catm__x" data-close aria-label="Đóng">&times;</button>
-    <h2 id="catm-h" class="catm__h">Tải catalogue</h2>
-    <p class="catm__t" data-ttl></p>
-    <input type="hidden" name="action" value="cbv_catalog"><input type="hidden" name="id"><input type="hidden" name="t0">
-    <div class="hp" aria-hidden="true"><input name="website" tabindex="-1" autocomplete="off"></div>
-    <label><span>Họ và tên *</span><input name="name" required autocomplete="name"></label>
-    <label><span>Số điện thoại *</span><input name="phone" type="tel" required inputmode="tel" autocomplete="tel"></label>
-    <label><span>Email *</span><input name="email" type="email" required autocomplete="email"></label>
-    <label><span>Công ty / đơn vị</span><input name="org" autocomplete="organization"></label>
-    <label class="catm__chk"><input type="checkbox" name="human" value="1"> Tôi không phải người máy</label>
-    <p class="msg" data-msg hidden></p>
-    <button class="btn btn--cta catm__go" type="submit">Nhận file catalogue</button>
-    <p class="catm__note">Thông tin chỉ dùng để ICD Cabin gửi tài liệu và tư vấn sản phẩm.</p>
-  </form>
-</dialog>
         <section class="prow">
       <header class="sec-head"><h2 class="sec-head__h">Các sản phẩm khác</h2></header>
       <div class="grid grid--3"><article class="pcard">
@@ -315,6 +284,27 @@ var woocommerce_params = {"ajax_url":"/wp-admin/admin-ajax.php","wc_ajax_url":"/
   <a class="float__btn float__btn--quote" href="Nha-lap-ghep-F20-Mini.html#bao-gia">Báo giá</a>
   <button class="float__top" id="totop" aria-label="Lên đầu trang"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 7l7 7-1.4 1.4L12 9.8l-5.6 5.6L5 14z"/></svg></button>
 </div>
+<dialog class="catm" id="catm" aria-labelledby="catm-h">
+  <form class="catm__f" data-ajax="wp-admin/admin-ajax.php" novalidate>
+    <button type="button" class="catm__x" data-close aria-label="Đóng">&times;</button>
+    <h2 id="catm-h" class="catm__h">Tải catalogue</h2>
+    <p class="catm__sub">Nhập thông tin, catalogue PDF sẽ được gửi ngay về email của bạn.</p>
+    <input type="hidden" name="action" value="cbv_catalog"><input type="hidden" name="t0">
+    <div class="hp" aria-hidden="true"><input name="website" tabindex="-1" autocomplete="off"></div>
+    <fieldset class="catm__list">
+      <legend>Catalogue</legend>
+            <label class="catm__chk"><input type="checkbox" name="ids[]" value="790" checked> <span>Catalogue nhà di động - nhà lắp ghép <small>(PDF 593,5 KB)</small></span></label>
+          </fieldset>
+    <label><span>Họ và tên *</span><input name="name" required autocomplete="name"></label>
+    <label><span>Số điện thoại *</span><input name="phone" type="tel" required inputmode="tel" autocomplete="tel"></label>
+    <label><span>Email nhận catalogue *</span><input name="email" type="email" required autocomplete="email"></label>
+    <label><span>Công ty / đơn vị</span><input name="org" autocomplete="organization"></label>
+    <label class="catm__chk"><input type="checkbox" name="human" value="1"> <span>Tôi không phải người máy</span></label>
+    <p class="msg" data-msg hidden></p>
+    <button class="btn btn--cta catm__go" type="submit">Gửi catalogue về email</button>
+    <p class="catm__note">Thông tin chỉ dùng để ICD Cabin gửi tài liệu và tư vấn sản phẩm.</p>
+  </form>
+</dialog>
 <script type="speculationrules">
 {"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp-*.php","/wp-admin/*","/wp-content/uploads/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/icd-cabin/*","/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
 </script>
@@ -331,6 +321,6 @@ var wc_order_attribution = {"params":{"lifetime":1.0000000000000001e-5,"session"
 //# sourceURL=wc-order-attribution-js-extra
 </script>
 <script id="wc-order-attribution-js" src="wp-content/plugins/woocommerce/assets/js/frontend/order-attribution.min.js"></script>
-<script data-wp-strategy="defer" defer id="cbv-main-js" src="wp-content/themes/icd-cabin/assets/js/main.js?v=1792118060"></script>
+<script data-wp-strategy="defer" defer id="cbv-main-js" src="wp-content/themes/icd-cabin/assets/js/main.js?v=1792119018"></script>
 </body>
 </html>
