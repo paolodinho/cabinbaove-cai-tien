@@ -24,49 +24,49 @@ Reset
 --------------------------------------------------------------*/
 @font-face {
     font-family: 'UVN Bai Sau Nhe';
-    src: url('assets/fonts/UVN Bai Sau Nhe/uvnbaisau_t-webfont.woff2') format('woff2'),
-         url('assets/fonts/UVN Bai Sau Nhe/uvnbaisau_t-webfont.woff') format('woff');
+    src: url('assets/fonts/UVN%20Bai%20Sau%20Nhe/uvnbaisau_t-webfont.woff2.html') format('woff2'),
+         url('assets/fonts/UVN%20Bai%20Sau%20Nhe/uvnbaisau_t-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 
 }
 @font-face {
     font-family: 'TPBaomoi';
-    src: url('assets/fonts/TPBaomoi/Baomoi_gdi.eot?v=1');
+    src: url('assets/fonts/TPBaomoi/Baomoi_gdi.eot%3Fv=1');
     src: local('Ă¢ËœÂº'), 
-    url('assets/fonts/TPBaomoi/Baomoi_gdi.eot?#iefixv=1') format('embedded-opentype'), 
-    url('assets/fonts/TPBaomoi/Baomoi_gdi.woff?v=1') format('woff'), 
-    url('assets/fonts/TPBaomoi/Baomoi_gdi.ttf?v=1') format('truetype');
+    url('assets/fonts/TPBaomoi/Baomoi_gdi.eot%3F') format('embedded-opentype'), 
+    url('assets/fonts/TPBaomoi/Baomoi_gdi.woff%3Fv=1') format('woff'), 
+    url('assets/fonts/TPBaomoi/Baomoi_gdi.ttf%3Fv=1') format('truetype');
     font-weight: 400;
     font-style: normal
 }
 @font-face {
     font-family: 'TPBaomoi';
-    src: url('assets/fonts/TPBaomoi/Baomoi-Italic_gdi.eot?v=1');
+    src: url('assets/fonts/TPBaomoi/Baomoi-Italic_gdi.eot%3Fv=1');
     src: local('Ă¢ËœÂº'), 
-    url('assets/fonts/TPBaomoi/Baomoi-Italic_gdi.eot?#iefixv=1') format('embedded-opentype'), 
-    url('assets/fonts/TPBaomoi/Baomoi-Italic_gdi.woff?v=1') format('woff'), 
-    url('assets/fonts/TPBaomoi/Baomoi-Italic_gdi.ttf?v=1') format('truetype');
+    url('assets/fonts/TPBaomoi/Baomoi-Italic_gdi.eot%3F') format('embedded-opentype'), 
+    url('assets/fonts/TPBaomoi/Baomoi-Italic_gdi.woff%3Fv=1') format('woff'), 
+    url('assets/fonts/TPBaomoi/Baomoi-Italic_gdi.ttf%3Fv=1') format('truetype');
     font-weight: 400;
     font-style: italic
 }
 @font-face {
     font-family: 'TPBaomoi';
-    src: url('assets/fonts/TPBaomoi/Baomoi-SemiBold_gdi.eot?v=1');
+    src: url('assets/fonts/TPBaomoi/Baomoi-SemiBold_gdi.eot%3Fv=1');
     src: local('Ă¢ËœÂº'), 
-    url('assets/fonts/TPBaomoi/Baomoi-SemiBold_gdi.eot?#iefixv=1') format('embedded-opentype'), 
-    url('assets/fonts/TPBaomoi/Baomoi-SemiBold_gdi.woff?v=1') format('woff'), 
-    url('assets/fonts/TPBaomoi/Baomoi-SemiBold_gdi.ttf?v=1') format('truetype');
+    url('assets/fonts/TPBaomoi/Baomoi-SemiBold_gdi.eot%3F') format('embedded-opentype'), 
+    url('assets/fonts/TPBaomoi/Baomoi-SemiBold_gdi.woff%3Fv=1') format('woff'), 
+    url('assets/fonts/TPBaomoi/Baomoi-SemiBold_gdi.ttf%3Fv=1') format('truetype');
     font-weight: 700;
     font-style: normal
 }
 @font-face {
     font-family: 'TPBaomoi';
-    src: url('assets/fonts/TPBaomoi/Baomoi-SemiBoldItalic_gdi.eot?v=1');
+    src: url('assets/fonts/TPBaomoi/Baomoi-SemiBoldItalic_gdi.eot%3Fv=1');
     src: local('Ă¢ËœÂº'), 
-    url('assets/fonts/TPBaomoi/Baomoi-SemiBoldItalic_gdi.eot?#iefixv=1') format('embedded-opentype'), 
-    url('assets/fonts/TPBaomoi/Baomoi-SemiBoldItalic_gdi.woff?v=1') format('woff'), 
-    url('assets/fonts/TPBaomoi/Baomoi-SemiBoldItalic_gdi.ttf?v=1') format('truetype');
+    url('assets/fonts/TPBaomoi/Baomoi-SemiBoldItalic_gdi.eot%3F') format('embedded-opentype'), 
+    url('assets/fonts/TPBaomoi/Baomoi-SemiBoldItalic_gdi.woff%3Fv=1') format('woff'), 
+    url('assets/fonts/TPBaomoi/Baomoi-SemiBoldItalic_gdi.ttf%3Fv=1') format('truetype');
     font-weight: 700;
     font-style: italic
 }
