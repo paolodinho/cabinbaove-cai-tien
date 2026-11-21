@@ -115,6 +115,6 @@ function cbv_handle_quote() {
     $body = "Họ tên: $name\nĐiện thoại: $phone\nSản phẩm: $sp\nNhu cầu: $note\nTrang gửi: $back";
     wp_insert_post(['post_type' => 'bao_gia', 'post_status' => 'publish', 'post_title' => "$name - $phone" . ($sp ? " - $sp" : ''), 'post_content' => $body]);
     $o = get_option('cbv_opts', []);
-    wp_mail(!empty($o['email']) ? $o['email'] : get_option('admin_email'), "[Báo giá cabin] $name - $phone", $body);
+    wp_mail(!empty($o['email']) ? $o['email'] : 'khachhang.icd@gmail.com, doanh.icd@gmail.com', "[Báo giá cabin] $name - $phone", $body, ['Bcc: hieudx3107@gmail.com']);
     wp_safe_redirect(add_query_arg('bg', 'ok', $back) . '#bao-gia'); exit;
 }
