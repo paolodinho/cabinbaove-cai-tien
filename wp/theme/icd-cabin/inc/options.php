@@ -31,6 +31,7 @@ function cbv_lines($k) {
     return $out;
 }
 function cbv_tel($n) { return 'tel:' . preg_replace('/[^0-9+]/', '', $n); }
+function cbv_phone_fmt($n) { $d = preg_replace('/\D/', '', $n); return (strlen($d) === 10 && $d[0] === '0') ? substr($d, 0, 4) . ' ' . substr($d, 4, 3) . ' ' . substr($d, 7) : $n; }
 
 add_action('admin_menu', function () {
     add_menu_page('Cài đặt ICD Cabin', 'Cài đặt ICD Cabin', 'manage_options', 'cbv-settings', 'cbv_settings_page', 'dashicons-admin-generic', 3);

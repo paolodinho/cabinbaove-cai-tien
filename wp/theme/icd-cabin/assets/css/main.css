@@ -236,11 +236,11 @@ p,li,figcaption{text-wrap:pretty}
 
 /* Nút nổi */
 .float{position:fixed;left:16px;bottom:16px;z-index:50;display:flex;flex-direction:column;align-items:stretch;gap:8px}
-.float__btn{display:inline-flex;align-items:center;justify-content:center;gap:0;width:52px;height:52px;padding:0;border-radius:50%;overflow:hidden;font-weight:700;font-size:14px;box-shadow:0 4px 14px rgba(20,30,25,.22);white-space:nowrap;transition:width .25s ease,padding .25s ease,gap .25s ease}
+.float__btn{display:inline-flex;align-items:center;justify-content:flex-start;gap:8px;width:auto;height:52px;padding:0 20px 0 14px;border-radius:26px;overflow:hidden;font-weight:700;font-size:14px;box-shadow:0 4px 14px rgba(20,30,25,.22);white-space:nowrap;transition:width .25s ease,padding .25s ease,gap .25s ease}
 .float__btn svg{flex:none;width:24px;height:24px}
-.float__btn span{max-width:0;opacity:0;overflow:hidden;transition:max-width .25s ease,opacity .2s ease}
-.float__btn:hover,.float__btn:focus-visible{width:auto;padding:0 18px 0 14px;gap:8px}
-.float__btn:hover span,.float__btn:focus-visible span{max-width:200px;opacity:1}
+.float__btn span{max-width:none;opacity:1}
+.float__btn .lb{font-weight:600;opacity:.92}
+.float__btn:hover,.float__btn:focus-visible{transform:translateY(-2px)}
 .float__btn--call{background:#D0021B;color:#fff}.float__btn--call:hover{color:#fff;background:#A80016}
 .float__btn--zalo svg{width:30px;height:30px}.float__btn--zalo{background:#0068FF;color:#fff}.float__btn--zalo:hover{color:#fff;background:#0052CC}
 .float__btn--quote{display:none}
@@ -348,3 +348,7 @@ p,li,figcaption{text-wrap:pretty}
   .crumbs li:last-child{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis}
   .crumbs li:last-child a,.crumbs li:last-child span{overflow:hidden;text-overflow:ellipsis}
 }
+
+/* 21/11: nut goi/Zalo luon hien so dien thoai (khach chot) */
+@media (max-width:760px){.float__btn .lb{display:none}}
+@media (max-width:767px){.float__btn{min-width:0;padding:0 4px;gap:5px;font-size:13px}.float__btn span{font-size:13px;letter-spacing:-.1px}.float__btn svg{width:20px;height:20px}.float__btn--zalo svg{width:24px;height:24px}.float__btn--call,.float__btn--zalo{flex:1.35}.float__btn--quote{flex:.8}}
